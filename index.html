@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>ぞのの語翻訳ツール</title>
+  <style>
+    @font-face {
+      font-family: 'MPlus1-Ebold'; 
+      src: url('https://r52-jp.github.io/WORDS/Fonts/MPLUS1-ExtraBold.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: 'MPlus1-Regular'; 
+      src: url('https://r52-jp.github.io/WORDS/Fonts/MPLUS1-Regular.ttf') format('truetype');
+    }
+    h1 {
+        font-weight: normal;
+        border-bottom: double 5px #FFC778;
+        line-height: 1.5;
+        font-family: "MPlus1-Ebold";
+    }
+    textarea {
+      font-family: 'MPlus1-Regular';
+      height: 4.5em;
+      width: 99%;
+    }
+    button {
+      font-family: 'MPlus1-Regular';
+      font-size: larger;
+    }
+    a {
+      font-family: 'MPlus1-Regular';
+    }
+  </style>
+</head>
+<body>
+  <h1>ぞのの語翻訳ツール</h1>
+  <textarea placeholder="ここに翻訳したいテキストを入力してください...(枠は自由に広げることができます.)" id="Minput"></textarea>
+  <button id="transB" onclick="TRANSLATE()">↓ 翻訳！</button><br><br>
+  <a id="outputT">ここ</a>
+  <script>
+    let inputT;
+    let result = "";
+    let number = 0;
+    let resu;
+    function _translate(tr) {
+      if ( (tr.match(/^[A-Za-z]*$/)) || (tr == " ") || (tr == "-") ) {
+        resu = tr.charCodeAt(0).toString(2);
+        let lastnum = resu[resu.length - 1];
+        resu = resu.slice(0, -1);
+        resu = resu.replaceAll("1","ぞ").replaceAll("0","の");
+        if (lastnum == "0") {
+          resu = resu + "の⤵! "
+        } else {
+          resu = resu + "の⤴! "
+        };
+        resu = resu.replaceAll("ぞぞ","ぞ～のぞ").replaceAll("ぞぞ","ぞ～のぞ").replaceAll("ぞぞ","ぞ～のぞ").replaceAll("ぞぞ","ぞ～のぞ").replaceAll("ぞぞ","ぞ～のぞ").replaceAll("ぞぞ","ぞ～のぞ");
+        return resu
+      } else {
+        return tr
+      };
+    };
+
+    function TRANSLATE() {
+      inputT = document.getElementById("Minput").value;
+      for (let i=0; i<inputT.length; i++) {
+        result = result + _translate(inputT[i])
+      };
+      console.log(result);
+      document.getElementById("outputT").innerText = result;
+    };
+  </script>
+</body>
+</html>
