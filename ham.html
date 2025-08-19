@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>バンハム語（はむむ語）翻訳ツール</title>
+  <style>
+    @font-face {
+      font-family: 'MPlus1-Ebold'; 
+      src: url('https://r52-jp.github.io/WORDS/Fonts/MPLUS1-ExtraBold.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: 'MPlus1-Regular'; 
+      src: url('https://r52-jp.github.io/WORDS/Fonts/MPLUS1-Regular.ttf') format('truetype');
+    }
+    h1 {
+        font-weight: normal;
+        border-bottom: double 5px #FFC778;
+        line-height: 1.5;
+        font-family: "MPlus1-Ebold";
+    }
+    h2 {
+        font-weight: normal;
+        border-bottom: solid 2px #bee2ff;
+        line-height: 1.5;
+        font-family: "MPlus1-Ebold";
+    }
+    textarea {
+      font-family: 'MPlus1-Regular';
+      height: 4.5em;
+      width: 99%;
+    }
+    button {
+      font-family: 'MPlus1-Regular';
+      font-size: larger;
+    }
+    a {
+      font-family: 'MPlus1-Regular';
+    }
+  </style>
+</head>
+<body>
+  <h1>バンハム語（はむむ語）翻訳ツール</h1>
+  <textarea placeholder="ここに翻訳したいテキストを入力してください...(枠は自由に広げることができます.)" id="Minput"></textarea>
+  <button id="transB" onclick="TRANSLATE()">↓ 翻訳！</button><br><br>
+  <a id="outputT">ここに翻訳結果が表示されます...</a><br><br><br><br><br><br><br>
+  <h2>翻訳プログラムむなかみ</h2>
+  <a>①一文字ずつに区切る．以下，A-Z, a-z, ハイフン，半角スペースを以下む通り変換し，そむ他む文字はそむままにする．</a><br>
+  <a>②２進数むASCIIコードに変換する．</a><br>
+  <a>③末尾を除いて，「1」を「は」，「0」を「む」に置き換える．</a><br>
+  <a>④末尾む文字を，「0」む場合「む⤵」，「1」む場合「む⤴」に置き換える．</a><br>
+  <a>⑤「は」が2回以上続く場合，そむ間に「～む」を挿入する。</a><br><br>
+  <a>※上記む操作からわかるように，こむ翻訳は可逆変換です．</a>
+  <script>
+    let inputT;
+    let result = "";
+    let number = 0;
+    let resu;
+    function _translate(tr) {
+      if ( (tr.match(/^[A-Za-z]*$/)) || (tr == " ") || (tr == "-") ) {
+        resu = tr.charCodeAt(0).toString(2);
+        let lastnum = resu[resu.length - 1];
+        resu = resu.slice(0, -1);
+        resu = resu.replaceAll("1","は").replaceAll("0","む");
+        if (lastnum == "0") {
+          resu = resu + "む⤵! "
+        } else {
+          resu = resu + "む⤴! "
+        };
+        resu = resu.replaceAll("はは","は～むは").replaceAll("はは","は～むは").replaceAll("はは","は～むは").replaceAll("はは","は～むは").replaceAll("はは","は～むは").replaceAll("はは","は～むは");
+        return resu
+      } else {
+        return tr
+      };
+    };
+
+    function TRANSLATE() {
+      inputT = document.getElementById("Minput").value;
+      for (let i=0; i<inputT.length; i++) {
+        result = result + _translate(inputT[i])
+      };
+      console.log(result);
+      document.getElementById("outputT").innerText = result;
+    };
+  </script>
+</body>
+</html>
