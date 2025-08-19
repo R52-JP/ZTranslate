@@ -18,6 +18,12 @@
         line-height: 1.5;
         font-family: "MPlus1-Ebold";
     }
+    h2 {
+        font-weight: normal;
+        border-bottom: solid 2px #bee2ff;
+        line-height: 1.5;
+        font-family: "MPlus1-Ebold";
+    }
     textarea {
       font-family: 'MPlus1-Regular';
       height: 4.5em;
@@ -36,7 +42,13 @@
   <h1>ぞのの語翻訳ツール</h1>
   <textarea placeholder="ここに翻訳したいテキストを入力してください...(枠は自由に広げることができます.)" id="Minput"></textarea>
   <button id="transB" onclick="TRANSLATE()">↓ 翻訳！</button><br><br>
-  <a id="outputT">ここ</a>
+  <a id="outputT">ここに翻訳結果が表示されます...</a><br><br><br><br><br><br><br>
+  <h2>翻訳プログラムのなかみ</h2>
+  <a>①一文字ずつに区切る．以下，A-Z, a-z, ハイフン，半角スペースを以下の通り変換し，その他の文字はそのままにする．</a><br>
+  <a>②２進数のASCIIコードに変換する．</a><br>
+  <a>③末尾を除いて，「1」を「ぞ」，「0」を「の」に置き換える．</a><br>
+  <a>④末尾の文字を，「0」の場合「の⤵」，「1」の場合「の⤴」に置き換える．</a><br>
+  <a>⑤「ぞ」が2回以上続く場合，その間に「～の」を挿入する。</a><br>
   <script>
     let inputT;
     let result = "";
